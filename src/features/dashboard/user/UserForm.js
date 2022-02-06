@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
-import { addUser, removeSelectedUser, updateUser } from '../dashboardSlice';
+import { addUser, removeSelectedUser, selectedUser, selectUsers, updateUser } from '../dashboardSlice';
 
 function UserForm({ setIsUserFormVisible }) {
   const dispatch = useDispatch();
 
   // redux states
-  const { users, user } = useSelector((state) => state.dashboard);
+  const user = useSelector(selectedUser);
+  const users = useSelector(selectUsers);
 
   // local states
   const [userDetails, setUserDetails] = useState(user);

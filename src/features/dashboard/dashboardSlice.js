@@ -69,4 +69,12 @@ export const dashboardSlice = createSlice({
 export const { addUser, deleteUser, updateUser, setSelectedUser, removeSelectedUser, sortUsersByUsername } =
   dashboardSlice.actions;
 
+export const selectUsers = (state) => state.dashboard.users;
+
+export const selectedUser = (state) => state.dashboard.selectedUser;
+
+export const selectIsUsersSortedByUsername = (state) => state.dashboard.isUsersSortedByUsername;
+
+export const selectStatus = (state) => state.dashboard.status
+
 export default dashboardSlice.reducer;

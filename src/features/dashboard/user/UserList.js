@@ -3,7 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Container, Row, Spinner, Table } from 'reactstrap';
 import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs';
 
-import { deleteUser, removeSelectedUser, setSelectedUser, sortUsersByUsername } from '../dashboardSlice';
+import {
+  deleteUser,
+  removeSelectedUser,
+  selectedUser,
+  selectIsUsersSortedByUsername,
+  selectStatus,
+  selectUsers,
+  setSelectedUser,
+  sortUsersByUsername,
+} from '../dashboardSlice';
 import UserDeleteModal from './UserDeleteModal';
 import './User.css';
 
@@ -11,7 +20,11 @@ function UserList({ setIsUserFormVisible }) {
   const dispatch = useDispatch();
 
   // redux states
-  const { users, user, isUsersSortedByUsername, status } = useSelector((state) => state.dashboard);
+  
+  const users = useSelector(selectUsers);
+  const user = useSelector(selectedUser);
+  const isUsersSortedByUsername = useSelector(selectIsUsersSortedByUsername);
+  const status = useSelector(selectStatus);
 
   // local states
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);

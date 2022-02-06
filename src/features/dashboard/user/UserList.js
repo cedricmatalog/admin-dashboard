@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Container, Row, Table } from 'reactstrap';
+import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs';
 
 import {
   deleteUser,
   removeSelectedUser,
   selectedUser,
+  selectIsUsersSortedByUsername,
   selectUsers,
   setSelectedUser,
   sortUsersByUsername,
@@ -19,6 +21,7 @@ function UserList({ setIsUserFormVisible }) {
   // redux states
   const users = useSelector(selectUsers);
   const user = useSelector(selectedUser);
+  const isUsersSortedByUsername = useSelector(selectIsUsersSortedByUsername);
 
   // local states
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -71,6 +74,7 @@ function UserList({ setIsUserFormVisible }) {
             <th>Id</th>
             <th>Name</th>
             <th
+              className='d-flex'
               onClick={() => {
                 dispatch(sortUsersByUsername());
               }}
@@ -78,7 +82,18 @@ function UserList({ setIsUserFormVisible }) {
                 cursor: 'pointer',
               }}
             >
-              Username
+              Username &nbsp;
+              {isUsersSortedByUsername === null && (
+                <span className='d-inline-flex flex-column justify-content-end'>
+                  <BsFillCaretUpFill size='10px' />
+                  <BsFillCaretDownFill size='10px' />
+                </span>
+              )}
+              {isUsersSortedByUsername !== null && (
+                <span className='d-inline-flex align-items-center'>
+                  {isUsersSortedByUsername ? <BsFillCaretUpFill size='10px' /> : <BsFillCaretDownFill size='10px' />}
+                </span>
+              )}
             </th>
             <th>Email</th>
             <th>City</th>

@@ -6,7 +6,7 @@ import { formatUserData, generateId } from './dashboardUtilities';
 const initialState = {
   users: [],
   selectedUser: null,
-  isUsersSortedByUsername: false,
+  isUsersSortedByUsername: null,
 };
 
 export const fetchUsersAsync = createAsyncThunk('dashboard/fetchUsers', async () => {
@@ -59,5 +59,7 @@ export const { addUser, deleteUser, updateUser, setSelectedUser, removeSelectedU
 export const selectUsers = (state) => state.dashboard.users;
 
 export const selectedUser = (state) => state.dashboard.selectedUser;
+
+export const selectIsUsersSortedByUsername = (state) => state.dashboard.isUsersSortedByUsername;
 
 export default dashboardSlice.reducer;

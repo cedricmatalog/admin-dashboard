@@ -25,6 +25,8 @@ export const dashboardSlice = createSlice({
     },
     updateUser: (state, action) => {
       const updatedUser = { ...action.payload, address: { city: action.payload.city } }
+      // delete city from object to match existing shape of users and remove redundacy { city: 'sample', address: { city : 'sample' } }
+      delete updatedUser['city']
       state.users[action.payload.id - 1] = updatedUser
     },
     deleteUser: (state, action) => {

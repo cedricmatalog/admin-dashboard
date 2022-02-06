@@ -56,8 +56,6 @@ function UserForm({ setIsUserFormVisible }) {
 
   const { id, name, username, address, email } = userDetails || {}
 
-  
-
   const renderHeader = () => (
     <Container className='bg-light border pt-2'>
       <Row className='mt-3'>

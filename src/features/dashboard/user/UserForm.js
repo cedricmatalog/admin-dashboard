@@ -163,7 +163,7 @@ function UserForm({ setIsUserFormVisible }) {
             Cancel
           </Button>
           <Button color='success' onClick={handleSubmitButtonClicked}>
-            Submit
+            {user ? 'Update' : 'Submit'}
           </Button>
         </Col>
       </Row>

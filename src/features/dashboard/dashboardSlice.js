@@ -32,7 +32,8 @@ export const dashboardSlice = createSlice({
         ...action.payload,
         address: { city: action.payload.city ?? action.payload.address.city },
       });
-      state.users[action.payload.id - 1] = updatedUser;
+      const index = state.users.findIndex((user) => user.id === action.payload.id);
+      state.users[index] = updatedUser;
     },
     deleteUser: (state, action) => {
       state.users = state.users.filter((user) => user.id !== action.payload);

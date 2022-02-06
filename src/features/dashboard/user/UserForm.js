@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 
-import { addUser, removeSelectedUser, selectedUser, updateUser } from '../dashboardSlice';
+import { addUser, removeSelectedUser, selectedUser, selectUsers, updateUser } from '../dashboardSlice';
 
 function UserForm({ setIsUserFormVisible }) {
   const dispatch = useDispatch();
 
   // redux state
   const user = useSelector(selectedUser);
+  const users = useSelector(selectUsers);
 
   // local states
   const [userDetails, setUserDetails] = useState(user);
@@ -40,19 +41,32 @@ function UserForm({ setIsUserFormVisible }) {
 
   const validateUserDetails = () => {
     let errorMessages = {};
-    const { name, email } = userDetails || {};
+    const { name, email, username } = userDetails || {};
 
     if (name === undefined || name === '') {
-      errorMessages['name'] = 'Name is required';
+      errorMessages['name'] = 'Name is required.';
     }
 
     if (email === undefined || email === '') {
-      errorMessages['email'] = 'Email is required';
+      errorMessages['email'] = 'Email is required.';
+    } else {
+      if (!validateEmail(email)) {
+        errorMessages['email'] = 'Email is invalid.';
+      }
+    }
+
+    if (username !== '' && users.filter((user) => user.username === username).length > 0) {
+      errorMessages['username'] = 'Username is already taken.';
     }
 
     setErrors(errorMessages);
 
     return Object.keys(errorMessages).length === 0;
+  };
+
+  const validateEmail = (email) => {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
   };
 
   const { id, name, username, address, email } = userDetails || {};
@@ -107,7 +121,13 @@ function UserForm({ setIsUserFormVisible }) {
                 Username
               </Label>
               <Col>
-                <Input name='username' defaultValue={username} onChange={handleInputValueChange} />
+                <Input
+                  name='username'
+                  defaultValue={username}
+                  onChange={handleInputValueChange}
+                  className={errors.username ? 'border-danger' : ''}
+                />
+                {errors.username && <p className='text-danger'>{errors.username}</p>}
               </Col>
             </FormGroup>
             <FormGroup row>

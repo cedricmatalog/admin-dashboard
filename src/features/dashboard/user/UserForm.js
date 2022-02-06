@@ -43,18 +43,28 @@ function UserForm({ setIsUserFormVisible }) {
     let errorMessages = {};
     const { name, email, username, id } = userDetails || {};
 
+    // 1. check if name is undefined or blank
     if (name === undefined || name === '') {
       errorMessages['name'] = 'Name is required.';
     }
 
+    // 1. check if email is undefined or blank
+    // 2. check if email is invalid
+    // 3. chack if email is existing
     if (email === undefined || email === '') {
       errorMessages['email'] = 'Email is required.';
     } else {
       if (!isEmailValid(email)) {
         errorMessages['email'] = 'Email is invalid.';
+      } else {
+        if (users.filter((user) => user.email === email && user.id !== id).length > 0) {
+          errorMessages['email'] = 'Email is already taken.';
+        }
       }
     }
 
+    // 1. check if username is not blank
+    // 2. check if username is existing
     if (username !== '' && users.filter((user) => user.username === username && user.id !== id).length > 0) {
       errorMessages['username'] = 'Username is already taken.';
     }

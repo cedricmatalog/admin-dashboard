@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { fetchUsersAsync } from './dashboardSlice'
-import './Dashboard.css'
-import UserList from './UserList'
-import UserForm from './UserForm'
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { fetchUsersAsync } from './dashboardSlice';
+import './Dashboard.css';
+import UserList from './UserList';
+import UserForm from './UserForm';
 
 function Dashboard() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [isUserFormVisible, setIsUserFormVisible] = useState(false)
+  const [isUserFormVisible, setIsUserFormVisible] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchUsersAsync())
+    dispatch(fetchUsersAsync());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <>
@@ -25,7 +26,7 @@ function Dashboard() {
         <UserList setIsUserFormVisible={setIsUserFormVisible} />
       )}
     </>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

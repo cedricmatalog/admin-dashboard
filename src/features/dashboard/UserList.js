@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button, Col, Container, Row, Table } from 'reactstrap'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Col, Container, Row, Table } from 'reactstrap';
 import {
   deleteUser,
   removeSelectedUser,
@@ -8,43 +8,43 @@ import {
   selectUsers,
   setSelectedUser,
   sortUsersByUsername,
-} from './dashboardSlice'
-import UserDeleteModal from './UserDeleteModal'
+} from './dashboardSlice';
+import UserDeleteModal from './UserDeleteModal';
 
 function UserList({ setIsUserFormVisible }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const user = useSelector(selectedUser)
+  const user = useSelector(selectedUser);
 
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const toggleModal = () => setIsModalVisible(!isModalVisible)
+  const toggleModal = () => setIsModalVisible(!isModalVisible);
 
-  const users = useSelector(selectUsers)
+  const users = useSelector(selectUsers);
 
   const handleDeleteButtonClicked = (user) => {
     return () => {
-      dispatch(setSelectedUser(user))
-      toggleModal()
-    }
-  }
+      dispatch(setSelectedUser(user));
+      toggleModal();
+    };
+  };
 
   const handleEditButtonClicked = (user) => {
     return () => {
-      dispatch(setSelectedUser(user))
-      setIsUserFormVisible(true)
-    }
-  }
+      dispatch(setSelectedUser(user));
+      setIsUserFormVisible(true);
+    };
+  };
 
   const handleAddButtonClicked = () => {
-    setIsUserFormVisible(true)
-  }
+    setIsUserFormVisible(true);
+  };
 
   const handleDeleteUser = () => {
-    dispatch(deleteUser(user.id))
-    dispatch(removeSelectedUser())
-    toggleModal()
-  }
+    dispatch(deleteUser(user.id));
+    dispatch(removeSelectedUser());
+    toggleModal();
+  };
 
   const renderHeader = () => (
     <Container className='bg-light border pt-2'>
@@ -59,7 +59,7 @@ function UserList({ setIsUserFormVisible }) {
         </Col>
       </Row>
     </Container>
-  )
+  );
 
   const renderTable = () => (
     <Container className='bg-light border pt-2'>
@@ -70,7 +70,7 @@ function UserList({ setIsUserFormVisible }) {
             <th>Name</th>
             <th
               onClick={() => {
-                dispatch(sortUsersByUsername())
+                dispatch(sortUsersByUsername());
               }}
               style={{
                 cursor: 'pointer',
@@ -86,7 +86,7 @@ function UserList({ setIsUserFormVisible }) {
         </thead>
         <tbody>
           {users.map((user) => {
-            const { id, name, username = '', email, address = '' } = user
+            const { id, name, username = '', email, address = '' } = user;
             return (
               <tr key={id}>
                 <th scope='row'>{id}</th>
@@ -105,14 +105,14 @@ function UserList({ setIsUserFormVisible }) {
                   </Button>
                 </td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </Table>
 
       {users.length === 0 && <p className='text-center'>No users found.</p>}
     </Container>
-  )
+  );
 
   return (
     <>
@@ -126,7 +126,7 @@ function UserList({ setIsUserFormVisible }) {
         username={user?.username}
       />
     </>
-  )
+  );
 }
 
-export default UserList
+export default UserList;

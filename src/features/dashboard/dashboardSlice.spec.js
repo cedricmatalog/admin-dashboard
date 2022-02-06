@@ -1,5 +1,5 @@
-import dashboardReducer, { addUser, updateUser, deleteUser } from './dashboardSlice'
-import { generateId } from './dashboardUtilities'
+import dashboardReducer, { addUser, updateUser, deleteUser } from './dashboardSlice';
+import { generateId } from './dashboardUtilities';
 
 describe('counter reducer', () => {
   const initialState = {
@@ -16,7 +16,7 @@ describe('counter reducer', () => {
     ],
     selectedUser: null,
     isUsersSortedByUsername: false,
-  }
+  };
 
   const testUser = {
     name: 'testName',
@@ -26,7 +26,7 @@ describe('counter reducer', () => {
     address: {
       city: 'testCIty',
     },
-  }
+  };
 
   const updatedTestUser = {
     name: 'updatedTestName',
@@ -34,23 +34,23 @@ describe('counter reducer', () => {
     username: 'updatedTestUsername',
     id: 1,
     city: 'updatedTestCity',
-  }
+  };
 
   it('should handle initial state', () => {
     expect(dashboardReducer(undefined, { type: 'unknown' })).toEqual({
       users: [],
       selectedUser: null,
       isUsersSortedByUsername: false,
-    })
-  })
+    });
+  });
 
   it('should handle addUser', () => {
-    const actual = dashboardReducer(initialState, addUser(testUser))
-    expect(actual.users.length).toEqual(2)
-  })
+    const actual = dashboardReducer(initialState, addUser(testUser));
+    expect(actual.users.length).toEqual(2);
+  });
 
   it('should handle updateUser', () => {
-    const actual = dashboardReducer(initialState, updateUser(updatedTestUser))
+    const actual = dashboardReducer(initialState, updateUser(updatedTestUser));
 
     expect(actual.users[0]).toEqual({
       name: 'updatedTestName',
@@ -58,11 +58,11 @@ describe('counter reducer', () => {
       username: 'updatedTestUsername',
       id: 1,
       address: { city: 'updatedTestCity' },
-    })
-  })
+    });
+  });
 
   it('should handle deleteUser', () => {
-    const actual = dashboardReducer(initialState, deleteUser(1))
-    expect(actual.users.length).toEqual(0)
-  })
-})
+    const actual = dashboardReducer(initialState, deleteUser(1));
+    expect(actual.users.length).toEqual(0);
+  });
+});

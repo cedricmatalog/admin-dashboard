@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import React from 'react';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 
 function UserDeleteModal({ isModalVisible, toggleModal, handleDeleteUser, username }) {
   return (
@@ -15,7 +15,7 @@ function UserDeleteModal({ isModalVisible, toggleModal, handleDeleteUser, userna
         </Button>
       </ModalFooter>
     </Modal>
-  )
+  );
 }
 
-export default UserDeleteModal
+export default UserDeleteModal;

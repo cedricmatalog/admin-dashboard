@@ -1,60 +1,60 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
-import { addUser, removeSelectedUser, selectedUser, updateUser } from './dashboardSlice'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import { addUser, removeSelectedUser, selectedUser, updateUser } from './dashboardSlice';
 
 function UserForm({ setIsUserFormVisible }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   // redux state
-  const user = useSelector(selectedUser)
+  const user = useSelector(selectedUser);
 
   // local states
-  const [userDetails, setUserDetails] = useState(user)
-  const [errors, setErrors] = useState({})
+  const [userDetails, setUserDetails] = useState(user);
+  const [errors, setErrors] = useState({});
 
   const handleInputValueChange = (e) => {
-    const { name, value } = e.target
-    setUserDetails({ ...userDetails, [name]: value })
-  }
+    const { name, value } = e.target;
+    setUserDetails({ ...userDetails, [name]: value });
+  };
 
   const handleCancelButtonClicked = () => {
-    dispatch(removeSelectedUser())
-    setIsUserFormVisible(false)
-  }
+    dispatch(removeSelectedUser());
+    setIsUserFormVisible(false);
+  };
 
   const handleSubmitButtonClicked = () => {
-    const isUserDetailsValid = validateUserDetails()
-    if (!isUserDetailsValid) return
+    const isUserDetailsValid = validateUserDetails();
+    if (!isUserDetailsValid) return;
 
     if (user) {
-      dispatch(updateUser(userDetails))
-      dispatch(removeSelectedUser())
+      dispatch(updateUser(userDetails));
+      dispatch(removeSelectedUser());
     } else {
-      dispatch(addUser(userDetails))
+      dispatch(addUser(userDetails));
     }
 
-    setIsUserFormVisible(false)
-  }
+    setIsUserFormVisible(false);
+  };
 
   const validateUserDetails = () => {
-    let errorMessages = {}
-    const { name, email } = userDetails || {}
+    let errorMessages = {};
+    const { name, email } = userDetails || {};
 
     if (name === undefined || name === '') {
-      errorMessages['name'] = 'Name is required'
+      errorMessages['name'] = 'Name is required';
     }
 
     if (email === undefined || email === '') {
-      errorMessages['email'] = 'Email is required'
+      errorMessages['email'] = 'Email is required';
     }
 
-    setErrors(errorMessages)
+    setErrors(errorMessages);
 
-    return Object.keys(errorMessages).length === 0
-  }
+    return Object.keys(errorMessages).length === 0;
+  };
 
-  const { id, name, username, address, email } = userDetails || {}
+  const { id, name, username, address, email } = userDetails || {};
 
   const renderHeader = () => (
     <Container className='bg-light border pt-2'>
@@ -64,7 +64,7 @@ function UserForm({ setIsUserFormVisible }) {
         </Col>
       </Row>
     </Container>
-  )
+  );
 
   const renderForm = () => (
     <Container className='bg-light border pt-5 pb-5'>
@@ -121,7 +121,7 @@ function UserForm({ setIsUserFormVisible }) {
         </Col>
       </Row>
     </Container>
-  )
+  );
 
   const renderButtons = () => (
     <Container className='bg-light border pt-2'>
@@ -137,7 +137,7 @@ function UserForm({ setIsUserFormVisible }) {
         </Col>
       </Row>
     </Container>
-  )
+  );
 
   return (
     <>
@@ -145,7 +145,7 @@ function UserForm({ setIsUserFormVisible }) {
       {renderForm()}
       {renderButtons()}
     </>
-  )
+  );
 }
 
-export default UserForm
+export default UserForm;

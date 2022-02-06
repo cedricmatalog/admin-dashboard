@@ -24,7 +24,7 @@ describe('counter reducer', () => {
     username: 'testUsername',
     id: generateId(initialState),
     address: {
-      city: 'testCIty',
+      city: 'testCity',
     },
   };
 

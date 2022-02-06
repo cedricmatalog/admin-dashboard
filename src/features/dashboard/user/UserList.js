@@ -11,10 +11,11 @@ import {
   sortUsersByUsername,
 } from '../dashboardSlice';
 import UserDeleteModal from './UserDeleteModal';
+import './User.css';
 
 function UserList({ setIsUserFormVisible }) {
   const dispatch = useDispatch();
-  
+
   // redux states
   const users = useSelector(selectUsers);
   const user = useSelector(selectedUser);
@@ -22,7 +23,7 @@ function UserList({ setIsUserFormVisible }) {
   // local states
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const toggleDeleteModal = () => setIsDeleteModalVisible(!isDeleteModalVisible);
-  
+
   const handleDeleteButtonClicked = (user) => {
     return () => {
       dispatch(setSelectedUser(user));

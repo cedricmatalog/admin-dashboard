@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { fetchUsersAsync } from './dashboardSlice';
-import './Dashboard.css';
 import UserList from './user/UserList';
 import UserForm from './user/UserForm';
 

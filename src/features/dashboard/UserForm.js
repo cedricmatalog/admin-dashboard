@@ -21,8 +21,8 @@ function UserForm({ setIsUserFormVisible }) {
   }
 
   const handleSubmitButtonClicked = () => {
-    const errorMessages = validateUserDetails()
-    if (Object.keys(errorMessages).length !== 0) return
+    const isUserDetailsValid = validateUserDetails()
+    if (!isUserDetailsValid) return
 
     user ? dispatch(updateUser(userDetails)) : dispatch(addUser(userDetails))
 
@@ -34,16 +34,16 @@ function UserForm({ setIsUserFormVisible }) {
     const { name, email } = userDetails || {}
 
     if (name === undefined || name === '') {
-      errorMessages = { ...errorMessages, name: 'Name is required' }
+      errorMessages['name'] = 'Name is required'
     }
 
     if (email === undefined || email === '') {
-      errorMessages = { ...errorMessages, email: 'Email is required' }
+      errorMessages['email'] = 'Email is required'
     }
 
     setErrors(errorMessages)
 
-    return errorMessages
+    return Object.keys(errorMessages).length === 0
   }
 
   const { id, name, username, address, email } = userDetails || {}

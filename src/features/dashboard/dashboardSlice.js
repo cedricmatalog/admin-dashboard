@@ -7,6 +7,7 @@ const initialState = {
   users: [],
   selectedUser: null,
   isUsersSortedByUsername: null,
+  status: 'idle',
 };
 
 export const fetchUsersAsync = createAsyncThunk('dashboard/fetchUsers', async () => {
@@ -51,19 +52,21 @@ export const dashboardSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {
-      state.users = action.payload;
-    });
+    builder
+      .addCase(fetchUsersAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUsersAsync.fulfilled, (state, action) => {
+        state.users = action.payload;
+        state.status = 'succeeded';
+      })
+      .addCase(fetchUsersAsync.rejected, (state) => {
+        state.status = 'failed';
+      });
   },
 });
 
 export const { addUser, deleteUser, updateUser, setSelectedUser, removeSelectedUser, sortUsersByUsername } =
   dashboardSlice.actions;
-
-export const selectUsers = (state) => state.dashboard.users;
-
-export const selectedUser = (state) => state.dashboard.selectedUser;
-
-export const selectIsUsersSortedByUsername = (state) => state.dashboard.isUsersSortedByUsername;
 
 export default dashboardSlice.reducer;

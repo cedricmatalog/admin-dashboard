@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Col, Container, Row, Table } from 'reactstrap';
+import { Button, Col, Container, Row, Spinner, Table } from 'reactstrap';
 import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs';
 
-import {
-  deleteUser,
-  removeSelectedUser,
-  selectedUser,
-  selectIsUsersSortedByUsername,
-  selectUsers,
-  setSelectedUser,
-  sortUsersByUsername,
-} from '../dashboardSlice';
+import { deleteUser, removeSelectedUser, setSelectedUser, sortUsersByUsername } from '../dashboardSlice';
 import UserDeleteModal from './UserDeleteModal';
 import './User.css';
 
@@ -19,9 +11,7 @@ function UserList({ setIsUserFormVisible }) {
   const dispatch = useDispatch();
 
   // redux states
-  const users = useSelector(selectUsers);
-  const user = useSelector(selectedUser);
-  const isUsersSortedByUsername = useSelector(selectIsUsersSortedByUsername);
+  const { users, user, isUsersSortedByUsername, status } = useSelector((state) => state.dashboard);
 
   // local states
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -127,7 +117,15 @@ function UserList({ setIsUserFormVisible }) {
         </tbody>
       </Table>
 
-      {users.length === 0 && <p className='text-center'>No users found.</p>}
+      {status === 'loading' && (
+        <div className='text-center mt-5 mb-5'>
+          <Spinner color='success' className='text-center'>
+            Loading...
+          </Spinner>
+        </div>
+      )}
+      {status === 'succeeded' && users.length === 0 && <p className='text-center'>No users found.</p>}
+      {status === 'failed' && <p className='text-danger text-center'>Something went wrong</p>}
     </Container>
   );
 

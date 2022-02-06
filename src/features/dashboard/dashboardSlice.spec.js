@@ -41,6 +41,7 @@ describe('counter reducer', () => {
       users: [],
       selectedUser: null,
       isUsersSortedByUsername: null,
+      status: 'idle',
     });
   });
 

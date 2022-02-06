@@ -58,7 +58,7 @@ function UserList({ setIsUserFormVisible }) {
           <h2 className='mb-5 '>User List</h2>
         </Col>
         <Col className='d-flex justify-content-end align-items-start'>
-          <Button color='primary' className='float-right' onClick={handleAddButtonClicked}>
+          <Button color='primary' className='px-5' onClick={handleAddButtonClicked}>
             Add new
           </Button>
         </Col>

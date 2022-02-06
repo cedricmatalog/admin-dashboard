@@ -21,8 +21,17 @@ function UserForm({ setIsUserFormVisible }) {
   }
 
   const handleSubmitButtonClicked = () => {
+    const errorMessages = validateUserDetails()
+    if (Object.keys(errorMessages).length !== 0) return
+
+    user ? dispatch(updateUser(userDetails)) : dispatch(addUser(userDetails))
+
+    handleCancelButtonClicked()
+  }
+
+  const validateUserDetails = () => {
     let errorMessages = {}
-    const { name, email, id } = userDetails || {}
+    const { name, email } = userDetails || {}
 
     if (name === undefined || name === '') {
       errorMessages = { ...errorMessages, name: 'Name is required' }
@@ -34,11 +43,7 @@ function UserForm({ setIsUserFormVisible }) {
 
     setErrors(errorMessages)
 
-    if (Object.keys(errorMessages).length !== 0) return
-
-    id ? dispatch(updateUser(userDetails)) : dispatch(addUser(userDetails))
-
-    handleCancelButtonClicked()
+    return errorMessages
   }
 
   const { id, name, username, address, email } = userDetails || {}

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { getNewUserId } from './dashboardUtilities'
+import { generateId } from './dashboardUtilities'
 
 const initialState = {
   users: [],
@@ -18,7 +18,7 @@ export const dashboardSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      const newUser = { ...action.payload, id: getNewUserId(state), address: { city: action.payload.city } }
+      const newUser = { ...action.payload, id: generateId(state), address: { city: action.payload.city } }
       // delete city from object to match existing shape of users and remove redundacy { city: 'sample', address: { city : 'sample' } }
       delete newUser['city']
       state.users = [...state.users, newUser]

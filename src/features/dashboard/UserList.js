@@ -13,19 +13,19 @@ import UserDeleteModal from './UserDeleteModal';
 
 function UserList({ setIsUserFormVisible }) {
   const dispatch = useDispatch();
-
+  
+  // redux states
+  const users = useSelector(selectUsers);
   const user = useSelector(selectedUser);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const toggleModal = () => setIsModalVisible(!isModalVisible);
-
-  const users = useSelector(selectUsers);
-
+  // local states
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const toggleDeleteModal = () => setIsDeleteModalVisible(!isDeleteModalVisible);
+  
   const handleDeleteButtonClicked = (user) => {
     return () => {
       dispatch(setSelectedUser(user));
-      toggleModal();
+      toggleDeleteModal();
     };
   };
 
@@ -43,7 +43,7 @@ function UserList({ setIsUserFormVisible }) {
   const handleDeleteUser = () => {
     dispatch(deleteUser(user.id));
     dispatch(removeSelectedUser());
-    toggleModal();
+    toggleDeleteModal();
   };
 
   const renderHeader = () => (
@@ -120,8 +120,8 @@ function UserList({ setIsUserFormVisible }) {
       {renderTable()}
 
       <UserDeleteModal
-        isModalVisible={isModalVisible}
-        toggleModal={toggleModal}
+        isModalVisible={isDeleteModalVisible}
+        toggleModal={toggleDeleteModal}
         handleDeleteUser={handleDeleteUser}
         username={user?.username}
       />

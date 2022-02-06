@@ -41,7 +41,7 @@ function UserForm({ setIsUserFormVisible }) {
 
   const validateUserDetails = () => {
     let errorMessages = {};
-    const { name, email, username } = userDetails || {};
+    const { name, email, username, id } = userDetails || {};
 
     if (name === undefined || name === '') {
       errorMessages['name'] = 'Name is required.';
@@ -55,7 +55,7 @@ function UserForm({ setIsUserFormVisible }) {
       }
     }
 
-    if (username !== '' && users.filter((user) => user.username === username).length > 0) {
+    if (username !== '' && users.filter((user) => user.username === username && user.id !== id).length > 0) {
       errorMessages['username'] = 'Username is already taken.';
     }
 

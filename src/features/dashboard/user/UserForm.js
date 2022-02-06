@@ -50,7 +50,7 @@ function UserForm({ setIsUserFormVisible }) {
     if (email === undefined || email === '') {
       errorMessages['email'] = 'Email is required.';
     } else {
-      if (!validateEmail(email)) {
+      if (!isEmailValid(email)) {
         errorMessages['email'] = 'Email is invalid.';
       }
     }
@@ -64,7 +64,7 @@ function UserForm({ setIsUserFormVisible }) {
     return Object.keys(errorMessages).length === 0;
   };
 
-  const validateEmail = (email) => {
+  const isEmailValid = (email) => {
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
   };

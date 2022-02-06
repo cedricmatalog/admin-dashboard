@@ -37,7 +37,6 @@ function UserList({ setIsUserFormVisible }) {
   }
 
   const handleAddButtonClicked = () => {
-    dispatch(removeSelectedUser())
     setIsUserFormVisible(true)
   }
 
@@ -72,6 +71,9 @@ function UserList({ setIsUserFormVisible }) {
             <th
               onClick={() => {
                 dispatch(sortUsersByUsername())
+              }}
+              style={{
+                cursor: 'pointer',
               }}
             >
               Username

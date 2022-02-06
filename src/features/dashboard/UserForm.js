@@ -5,8 +5,11 @@ import { addUser, removeSelectedUser, selectedUser, updateUser } from './dashboa
 
 function UserForm({ setIsUserFormVisible }) {
   const dispatch = useDispatch()
+
+  // redux state
   const user = useSelector(selectedUser)
 
+  // local states
   const [userDetails, setUserDetails] = useState(user)
   const [errors, setErrors] = useState({})
 
@@ -24,9 +27,14 @@ function UserForm({ setIsUserFormVisible }) {
     const isUserDetailsValid = validateUserDetails()
     if (!isUserDetailsValid) return
 
-    user ? dispatch(updateUser(userDetails)) : dispatch(addUser(userDetails))
+    if (user) {
+      dispatch(updateUser(userDetails))
+      dispatch(removeSelectedUser())
+    } else {
+      dispatch(addUser(userDetails))
+    }
 
-    handleCancelButtonClicked()
+    setIsUserFormVisible(false)
   }
 
   const validateUserDetails = () => {
@@ -47,6 +55,8 @@ function UserForm({ setIsUserFormVisible }) {
   }
 
   const { id, name, username, address, email } = userDetails || {}
+
+  
 
   const renderHeader = () => (
     <Container className='bg-light border pt-2'>
@@ -74,7 +84,7 @@ function UserForm({ setIsUserFormVisible }) {
                   name='name'
                   defaultValue={name}
                   onChange={handleInputValueChange}
-                  className={errors.email ? 'border-danger' : ''}
+                  className={errors.name ? 'border-danger' : ''}
                 />
                 {errors.name && <p className='text-danger'>{errors.name}</p>}
               </Col>

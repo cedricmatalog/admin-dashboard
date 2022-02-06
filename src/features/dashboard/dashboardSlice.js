@@ -28,7 +28,10 @@ export const dashboardSlice = createSlice({
       state.users = [...state.users, newUser];
     },
     updateUser: (state, action) => {
-      const updatedUser = formatUserData({ ...action.payload, address: { city: action.payload.city } });
+      const updatedUser = formatUserData({
+        ...action.payload,
+        address: { city: action.payload.city ?? action.payload.address.city },
+      });
       state.users[action.payload.id - 1] = updatedUser;
     },
     deleteUser: (state, action) => {

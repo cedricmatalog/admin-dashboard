@@ -38,7 +38,7 @@ export const dashboardSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {
-      state.users = []
+      state.users = action.payload
     })
   },
 })

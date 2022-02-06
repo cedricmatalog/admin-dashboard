@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { getNewUserId } from './dashboardUtilities'
 
 const initialState = {
   users: [],
-  selectedUser: null, 
+  selectedUser: null,
   isUsersSortedByUsername: false,
 }
 
@@ -17,9 +18,8 @@ export const dashboardSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      const newUserId =
-        state.users.length !== 0 ? state.users.sort((a, b) => a.id - b.id)[state.users.length - 1].id + 1 : 1
-      const newUser = { ...action.payload, id: newUserId, address: { city: action.payload.city } }
+      const newUser = { ...action.payload, id: getNewUserId(state), address: { city: action.payload.city } }
+      // delete city from object to match existing shape of users and remove redundacy { city: 'sample', address: { city : 'sample' } }
       delete newUser['city']
       state.users = [...state.users, newUser]
     },
@@ -28,25 +28,32 @@ export const dashboardSlice = createSlice({
       state.users[action.payload.id - 1] = updatedUser
     },
     deleteUser: (state, action) => {
-      state.users = state.users.filter(user => user.id !== action.payload)
+      state.users = state.users.filter((user) => user.id !== action.payload)
     },
-    sortUsersByUsername: state => {
+    setSelectedUser: (state, action) => {
+      state.selectedUser = action.payload
+    },
+    removeSelectedUser: (state) => {
+      state.selectedUser = null
+    },
+    sortUsersByUsername: (state) => {
       const sortedUsersByUsername = state.users.sort((a, b) => a.username.localeCompare(b.username))
       state.users = state.isUsersSortedByUsername ? sortedUsersByUsername.reverse() : sortedUsersByUsername
       state.isUsersSortedByUsername = !state.isUsersSortedByUsername
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {
       state.users = action.payload
     })
   },
 })
 
-export const { addUser, deleteUser, updateUser, sortUsersByUsername } = dashboardSlice.actions
+export const { addUser, deleteUser, updateUser, setSelectedUser, removeSelectedUser, sortUsersByUsername } =
+  dashboardSlice.actions
 
-export const selectUsers = state => state.dashboard.users
+export const selectUsers = (state) => state.dashboard.users
 
-export const selectedUser = state => state.dashboard.selectedUser
+export const selectedUser = (state) => state.dashboard.selectedUser
 
 export default dashboardSlice.reducer

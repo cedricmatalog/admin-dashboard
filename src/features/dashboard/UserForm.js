@@ -1,21 +1,22 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
-import { addUser, updateUser } from './dashboardSlice'
+import { addUser, removeSelectedUser, selectedUser, updateUser } from './dashboardSlice'
 
-function UserForm({ selectedUser, setSelectedUser, setIsUserFormVisible }) {
+function UserForm({ setIsUserFormVisible }) {
   const dispatch = useDispatch()
+  const user = useSelector(selectedUser)
 
-  const [userDetails, setUserDetails] = useState(selectedUser)
+  const [userDetails, setUserDetails] = useState(user)
   const [errors, setErrors] = useState({})
 
-  const handleInputValueChange = e => {
+  const handleInputValueChange = (e) => {
     const { name, value } = e.target
     setUserDetails({ ...userDetails, [name]: value })
   }
 
   const handleCancelButtonClicked = () => {
-    setSelectedUser(undefined)
+    dispatch(removeSelectedUser())
     setIsUserFormVisible(false)
   }
 

@@ -9,7 +9,6 @@ function Dashboard() {
   const dispatch = useDispatch()
 
   const [isUserFormVisible, setIsUserFormVisible] = useState(false)
-  const [selectedUser, setSelectedUser] = useState()
 
   useEffect(() => {
     dispatch(fetchUsersAsync())
@@ -20,19 +19,10 @@ function Dashboard() {
   return (
     <>
       <h1 className='mb-5'>Dashboard</h1>
-
       {isUserFormVisible ? (
-        <UserForm
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-          setIsUserFormVisible={setIsUserFormVisible}
-        />
+        <UserForm setIsUserFormVisible={setIsUserFormVisible} />
       ) : (
-        <UserList
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
-          setIsUserFormVisible={setIsUserFormVisible}
-        />
+        <UserList setIsUserFormVisible={setIsUserFormVisible} />
       )}
     </>
   )

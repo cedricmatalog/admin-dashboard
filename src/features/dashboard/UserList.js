@@ -1,11 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Col, Container, Row, Table } from 'reactstrap'
-import { deleteUser, selectUsers, sortUsersByUsername } from './dashboardSlice'
+import {
+  deleteUser,
+  removeSelectedUser,
+  selectedUser,
+  selectUsers,
+  setSelectedUser,
+  sortUsersByUsername,
+} from './dashboardSlice'
 import UserDeleteModal from './UserDeleteModal'
 
-function UserList({ selectedUser, setSelectedUser, setIsUserFormVisible }) {
+function UserList({ setIsUserFormVisible }) {
   const dispatch = useDispatch()
+
+  const user = useSelector(selectedUser)
 
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -13,28 +22,28 @@ function UserList({ selectedUser, setSelectedUser, setIsUserFormVisible }) {
 
   const users = useSelector(selectUsers)
 
-  const handleDeleteButtonClicked = user => {
+  const handleDeleteButtonClicked = (user) => {
     return () => {
-      setSelectedUser(user)
+      dispatch(setSelectedUser(user))
       toggleModal()
     }
   }
 
-  const handleEditButtonClicked = user => {
+  const handleEditButtonClicked = (user) => {
     return () => {
-      setSelectedUser(user)
+      dispatch(setSelectedUser(user))
       setIsUserFormVisible(true)
     }
   }
 
   const handleAddButtonClicked = () => {
-    setSelectedUser(undefined)
+    dispatch(removeSelectedUser())
     setIsUserFormVisible(true)
   }
 
   const handleDeleteUser = () => {
-    dispatch(deleteUser(selectedUser.id))
-    setSelectedUser(undefined)
+    dispatch(deleteUser(user.id))
+    dispatch(removeSelectedUser())
     toggleModal()
   }
 
@@ -74,7 +83,7 @@ function UserList({ selectedUser, setSelectedUser, setIsUserFormVisible }) {
           </tr>
         </thead>
         <tbody>
-          {users.map(user => {
+          {users.map((user) => {
             const { id, name, username = '', email, address = '' } = user
             return (
               <tr key={id}>
@@ -112,7 +121,7 @@ function UserList({ selectedUser, setSelectedUser, setIsUserFormVisible }) {
         isModalVisible={isModalVisible}
         toggleModal={toggleModal}
         handleDeleteUser={handleDeleteUser}
-        username={selectedUser?.username}
+        username={user?.username}
       />
     </>
   )

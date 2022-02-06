@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const initialState = {
   users: [],
+  selectedUser: null, 
   isUsersSortedByUsername: false,
 }
 
@@ -37,7 +38,7 @@ export const dashboardSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {
-      state.users = action.payload
+      state.users = []
     })
   },
 })
@@ -45,5 +46,7 @@ export const dashboardSlice = createSlice({
 export const { addUser, deleteUser, updateUser, sortUsersByUsername } = dashboardSlice.actions
 
 export const selectUsers = state => state.dashboard.users
+
+export const selectedUser = state => state.dashboard.selectedUser
 
 export default dashboardSlice.reducer

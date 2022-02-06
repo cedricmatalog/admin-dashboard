@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import { addUser, removeSelectedUser, selectedUser, updateUser } from './dashboardSlice';
+
+import { addUser, removeSelectedUser, selectedUser, updateUser } from '../dashboardSlice';
 
 function UserForm({ setIsUserFormVisible }) {
   const dispatch = useDispatch();

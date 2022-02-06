@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import { fetchUsersAsync } from './dashboardSlice';
 import './Dashboard.css';
-import UserList from './UserList';
-import UserForm from './UserForm';
+import UserList from './user/UserList';
+import UserForm from './user/UserForm';
 
 function Dashboard() {
   const dispatch = useDispatch();

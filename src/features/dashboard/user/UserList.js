@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Col, Container, Row, Table } from 'reactstrap';
+
 import {
   deleteUser,
   removeSelectedUser,
@@ -8,7 +9,7 @@ import {
   selectUsers,
   setSelectedUser,
   sortUsersByUsername,
-} from './dashboardSlice';
+} from '../dashboardSlice';
 import UserDeleteModal from './UserDeleteModal';
 
 function UserList({ setIsUserFormVisible }) {
@@ -52,7 +53,7 @@ function UserList({ setIsUserFormVisible }) {
         <Col>
           <h2 className='mb-5 '>User List</h2>
         </Col>
-        <Col>
+        <Col className='d-flex justify-content-end align-items-start'>
           <Button color='primary' className='float-right' onClick={handleAddButtonClicked}>
             Add new
           </Button>
@@ -95,7 +96,7 @@ function UserList({ setIsUserFormVisible }) {
                 <td>{email}</td>
                 <td>{address.city}</td>
                 <td>
-                  <Button color='warning' onClick={handleEditButtonClicked(user)}>
+                  <Button color='warning' className='text-white' onClick={handleEditButtonClicked(user)}>
                     edit
                   </Button>
                 </td>

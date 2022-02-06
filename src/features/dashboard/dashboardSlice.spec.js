@@ -40,7 +40,7 @@ describe('counter reducer', () => {
     expect(dashboardReducer(undefined, { type: 'unknown' })).toEqual({
       users: [],
       selectedUser: null,
-      isUsersSortedByUsername: false,
+      isUsersSortedByUsername: null,
     });
   });
 
